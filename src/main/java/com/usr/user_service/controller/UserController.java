@@ -34,7 +34,7 @@ public class UserController {
         User savedUser = userRepository.save(user);
         try {
             // Notify the Notification Service
-            restTemplate.postForObject("http://localhost:8082/notifications", savedUser, String.class);
+            restTemplate.postForObject("http://notification-service/notifications", savedUser, String.class);
         } catch (Exception e) {
             System.err.println("Failed to send notification: " + e.getMessage());
         }

@@ -17,7 +17,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private RestClient restClient;
+    private RestClient.Builder restClientBuilder;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -35,7 +35,10 @@ public class UserController {
         try {
             // Notify the Notification Service
             //restTemplate.postForObject("http://notification-service/notifications", savedUser, String.class);
-            restClient.post().uri("http://notification-service/notifications").retrieve().body(String.class);
+
+            restClientBuilder.build().post().uri("http://notification-service/notifications")
+                    .retrieve().body(String.class);
+
         } catch (Exception e) {
             System.err.println("Failed to send notification: " + e.getMessage());
         }

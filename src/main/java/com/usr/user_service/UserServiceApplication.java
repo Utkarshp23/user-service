@@ -15,10 +15,16 @@ public class UserServiceApplication {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
 
+	// @Bean
+	// @LoadBalanced
+    // public RestClient restClient() {
+    //     return RestClient.builder().build();	
+    // }
+
 	@Bean
 	@LoadBalanced
-    public RestClient restClient() {
-        return RestClient.builder().build();	
-    }
+	public RestClient.Builder restClientBuilder() {
+		return RestClient.builder();
+	}
 
 }

@@ -4,7 +4,7 @@ import com.usr.user_service.entity.User;
 import com.usr.user_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestClient restClient;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -34,7 +34,8 @@ public class UserController {
         User savedUser = userRepository.save(user);
         try {
             // Notify the Notification Service
-            restTemplate.postForObject("http://notification-service/notifications", savedUser, String.class);
+            //restTemplate.postForObject("http://notification-service/notifications", savedUser, String.class);
+            restClient.post().uri("http://notification-service/notifications").retrieve().body(String.class);
         } catch (Exception e) {
             System.err.println("Failed to send notification: " + e.getMessage());
         }
